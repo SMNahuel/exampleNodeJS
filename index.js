@@ -2,17 +2,17 @@ const exphbs = require("express-handlebars"); //Para el manejo de los HTML
 const morgan = require("morgan");
 const bodyParser = require("body-parser"); //Para el manejo de los strings JSON
 const express = require("express"); //Para el manejo del servidor Web
-const hbs = require('hbs');
-const path = require("path")
+const hbs = require("hbs");
+const path = require("path");
 /* const MySQL = require("./modulos/mysql"); //Añado el archivo mysql.js presente en la carpeta módulos */
 const app = express(); //Inicializo express para el manejo de las peticiones
 
 //this required before view engine setup
-hbs.registerPartials(__dirname + '/views/partials');
+hbs.registerPartials(__dirname + "/views/partials");
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'hbs');
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "hbs");
 app.use(morgan("dev"));
 
 app.use(express.static("public")); //Expongo al lado cliente la carpeta "public"
@@ -31,54 +31,81 @@ const server = app.listen(Listen_Port, function () {
   );
 });
 
-
-
 class Usario {
-  constructor(usuario, contraseña){
-    this.usuario = usuario,
-    this.contraseña = contraseña
+  constructor(usuario, contraseña, name, email) {
+    (this.usuario = usuario),
+      (this.contraseña = contraseña),
+      (this.email = email),
+      (this.name = name);
   }
 
-  getDatos(){
-    return {usuario, contrasñea}
+  getDatos() {
+    return { usuario, contrasñea };
   }
 }
 
-const usuarios = []
+const usuarios = [
+  {
+    email: "test@test.com",
+    usuario: "lable",
+    contraseña : "contraseña",
+    name: "name",
+     }
+];
 
+/* Aqui empiezan las peticiones que se pueden hacer */
 
-
+/* PETICIONES GET */
+/* Las vistas que podemos mostrar al usuario */
 app.get("/", function (req, res) {
-  res.render("../views/home");
+  return res.render("../views/home");
 });
 
 app.get("/login", function (req, res) {
-  res.render("../views/login");
+  return res.render("../views/login");
 });
 
 app.get("/register", function (req, res) {
-  res.render("../views/register");
+  return res.render("../views/register");
 });
 
+/* PETICIONES POST */
 
-/* POST SON PARA POSTEAR */
-/* Param */
 app.post("/register", function (req, res) {
-  const {usuario, contraseña} = req.body
-  usuarios.push(new Usario(usuario, contraseña))
-  res.sendStatus(200);
-});
+  const { usuario, contraseña, email, name } = req.body;
 
-/* Body */
-app.post("/login", function (req, res) {
-  console.log(usuarios);
-  if(req.body.usuario){
-    for(let i = 0; i < usuarios.length; i++){
-      if(usuarios[i].usuario === req.body.usuario){
-        return res.sendStatus(200);
-      }
-    }
-    res.sendStatus(304, "No se encontro usuario");
+  if (usuario === "" || contraseña === "") {
+    return res.render("../views/errorPage");
+  } else {
+    usuarios.push(new Usario(usuario, contraseña, email, name));
+    return res.render("../views/login");
   }
 });
 
+app.post("/login", function (req, res) {
+  if (req.body.usuario !== "" && req.body.contraseña !== "") {
+    for (let i = 0; i < usuarios.length; i++) {
+      if (
+        usuarios[i].usuario === req.body.usuario &&
+        usuarios[i].contraseña === req.body.contraseña
+      ) {
+        return res.render("../views/home");
+      }
+    }
+  } else {
+    return res.render("../views/errorPage");
+  }
+});
+
+/* PETICIONES PUT */
+/* GET POST PUT Y DELETE */
+app.put("/usuario", function (req, res) {
+  const {email, contraseña, name, usuario} = req.body
+  /*Aqui recorremos los usuarios  */
+  for(let i = 0; i < usuarios.length; i++){
+    /* Si el usuario que te pasaron existe en este arrya  */
+    if(/* Aqui va tu codigo */){
+      
+    }
+  }
+});

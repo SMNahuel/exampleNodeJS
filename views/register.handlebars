@@ -5,16 +5,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
+        <style>
+        form{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        button{
+            width: 100px;
+            height: 50px;
+            border: none;
+            background-color: coral;
+            border-radius: 50px;
+            margin-top: 10px;
+        }
+        input{
+            border-radius: 10px;
+            width: 50%;
+            height: 40px;
+            border: 1px solid black;
+        }
+    </style>
 </head>
 <script>
     async function sendData() {
         const usuario = document.getElementById("usuario").value
         const contraseña = document.getElementById("contraseña").value
         const data = {
-            usuario: usuario, 
+            usuario: usuario,
             contraseña: contraseña
         }
-
+        /*
+            try {
+                //make reqwues
+            } catch (err) {
+                //get error
+            } finally {
+                //do somenting 
+            }
+        */
         const response = await fetch("/register", {
             method: "POST",
             //mode: 'no-cors',
@@ -29,13 +59,37 @@
 <body>
     <div>
         <h1>Soy el register</h1>
-
-        <label>Usuario</label>
-        <input type="input" placeholder="Ingrese usuario" id="usuario" />
-        <label>Contraseña</label>
-        <input type="input" placeholder="Ingrese contraseña" id="contraseña" />
-        <button onclick="sendData()"> Login </button>
-
+        <form action="/register" method="post">
+            <label>Usuario</label>
+            <input 
+                type="text" 
+                placeholder="Ingrese usuario" 
+                id="usuario" 
+                name="usuario"
+            />
+            <label>Contraseña</label>
+            <input 
+                type="password" 
+                placeholder="Ingrese contraseña" 
+                id="contraseña" 
+                name="contraseña"
+            />
+            <label>Nombre</label>
+            <input 
+                type="text" 
+                placeholder="Ingrese su nombre" 
+                id="name" 
+                name="name"
+            />
+            <label>Email</label>
+            <input 
+                type="email" 
+                placeholder="Ingrese su email" 
+                id="email" 
+                name="email"
+            />
+            <button type="sumbit"> Login </button>
+        </form>
     </div>
 </body>
 
