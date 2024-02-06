@@ -44,14 +44,26 @@ class Usario {
   }
 }
 
+class Post {
+  constructor(autor, contenido) {
+    (this.autor = autor), (this.contenido = contenido);
+  }
+
+  getDatos() {
+    return { autor, contenido };
+  }
+}
+
 const usuarios = [
   {
     email: "test@test.com",
     usuario: "lable",
-    contraseña : "contraseña",
+    contraseña: "contraseña",
     name: "name",
-     }
+  },
 ];
+
+const post = [];
 
 /* Aqui empiezan las peticiones que se pueden hacer */
 
@@ -83,29 +95,32 @@ app.post("/register", function (req, res) {
 });
 
 app.post("/login", function (req, res) {
-  if (req.body.usuario !== "" && req.body.contraseña !== "") {
-    for (let i = 0; i < usuarios.length; i++) {
-      if (
-        usuarios[i].usuario === req.body.usuario &&
-        usuarios[i].contraseña === req.body.contraseña
-      ) {
-        return res.render("../views/home");
-      }
+  console.log(req.body);
+  console.log(usuarios);
+  for (let i = 0; i < usuarios.length; i++) {
+    if (
+      usuarios[i].usuario === req.body.usuario &&
+      usuarios[i].contraseña === req.body.contraseña
+    ) {
+      return res.render("../views/home");
     }
-  } else {
-    return res.render("../views/errorPage");
   }
+
+  res.render("../views/errorPage");
+});
+
+app.post("/posteos", function (req, res) {
+  const { autor, contenido } = req.body;
+  post.push(new Post(autor, contenido));
+  res.render("../views/posteos");
 });
 
 /* PETICIONES PUT */
 /* GET POST PUT Y DELETE */
 app.put("/usuario", function (req, res) {
-  const {email, contraseña, name, usuario} = req.body
+  const { email, contraseña, name, usuario } = req.body;
   /*Aqui recorremos los usuarios  */
-  for(let i = 0; i < usuarios.length; i++){
+  for (let i = 0; i < usuarios.length; i++) {
     /* Si el usuario que te pasaron existe en este arrya  */
-    if(/* Aqui va tu codigo */){
-      
-    }
   }
 });

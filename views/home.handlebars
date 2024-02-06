@@ -29,7 +29,41 @@
       border: 1px solid black;
     }
   </style>
+
 </head>
+<script>
+  async function postearContenido() {
+
+    const autor = document.getElementById("autor").value
+    const contenido = document.getElementById("contenido").value
+
+    const data = {
+      autor: autor,
+      contenido: contenido
+    }
+    const response = await fetch("/posteos", {
+      method:
+        "POST", //mode: 'no-cors', 
+      headers: { "Content-Type": "application/json", },
+      body: JSON.stringify(data),
+    });
+  }
+
+
+</script>
+
+<body>
+  <div class="container">
+    <label>Usuario</label>
+    <input type="text" name="autor" id="autor" />
+    <label>Contenido</label>
+    <textarea name="contenido" id="contenido"></textarea>
+    <button onclick="postearContenido()">Enviar Post</button>
+  </div>
+</body>
+
+</html>
+
 {{!--
 const response = fetch("", {
 method: "", // POST, PUT, DELETE, GET
@@ -37,42 +71,3 @@ body: JSON.stringify() // dentro del parentesis la data
 })
 
 --}}
-
-<script>
-  async function actualizarUsuario() {
-    const email = document.getElementById("email").value
-    const contraseña = document.getElementById("contraseña").value
-    const name = document.getElementById("nombre").value
-    const usuario = document.getElementById("usuario").value
-    const data = {
-      email: email,
-      contraseña: contraseña,
-      name: name,
-      usuario: usuario
-    }
-    console.log(data)
-    const response = fetch("usuario", {
-      method: "put",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data)
-    })
-  }
-</script>
-
-<body>
-  <div class="container">
-    <label>Usuario</label>
-    <input type="text" name="usuario" id="usuario" />
-    <label>Contraseña</label>
-    <input type="password" name="contraseña" id="contraseña" />
-    <label>Email</label>
-    <input type="email" name="email" id="email" />
-    <label>Nombre</label>
-    <input type="text" name="nombre" id="nombre" />
-    <button onclick="actualizarUsuario()">Enviar datos</button>
-  </div>
-</body>
-
-</html>
